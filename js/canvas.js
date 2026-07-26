@@ -529,6 +529,135 @@ function performDrop() {
 }
 
 /* ==========================================
+   CANVAS CRUD OPERATIONS
+   ========================================== */
+
+function createWidget(type) {
+  if (!WidgetTemplates[type]) return null;
+  const e = WidgetTemplates[type]();
+  e.setAttribute("data-dc", gid());
+  e.setAttribute("data-dc-tag", type);
+  return e;
+}
+
+function addToCanvas(type, target) {
+  const canvas = $("#canvas");
+  const e = createWidget(type);
+  if (!e) return;
+  (target && target !== canvas ? target : canvas).appendChild(e);
+  const hint = $("#canvasHint");
+  if (hint) hint.classList.add("hidden");
+  bindElement(e);
+  saveHist();
+  updateLayers();
+  selectEl(e);
+  toast(`Added ${type}`, "success");
+}
+
+function bindElement(el) {
+  // Click to select
+  el.addEventListener("mousedown", (ev) => {
+    if (DC.isPanning || DC.tool === "hand" || DC.spaceDown) return;
+    if (ev.button !== 0) return;
+    ev.stopPropagation();
+
+    // Select immediately
+    selectEl(el);
+
+    // Start internal drag tracking
+    startInternalDrag(el, ev);
+  });
+
+  el.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+    // Don't re-select if we just finished dragging
+    if (_intDrag.didDrag) return;
+    selectEl(el);
+  });
+
+  // Double click to edit text
+  el.addEventListener("dblclick", (ev) => {
+    if (DC.tool === "hand" || DC.spaceDown) return;
+    ev.stopPropagation();
+    const tag = el.tagName.toLowerCase();
+    if (EDITABLE_TAGS.includes(tag)) {
+      el.contentEditable = "true";
+      el.focus();
+      el.addEventListener(
+        "blur",
+        () => {
+          el.contentEditable = "false";
+          updateLayers();
+          saveHist();
+        },
+        { once: true },
+      );
+    }
+  });
+
+  // External widget drop onto containers
+  el.addEventListener("dragover", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const tag = el.tagName.toLowerCase();
+    const wt = el.getAttribute("data-dc-tag") || "";
+    if (CONTAINERS.includes(tag) || wt.startsWith("comp-")) {
+      el.classList.add("drop-active");
+    }
+  });
+
+  el.addEventListener("dragleave", () => el.classList.remove("drop-active"));
+
+  el.addEventListener("drop", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    el.classList.remove("drop-active");
+    const wt = ev.dataTransfer.getData("text/widget");
+    if (wt) addToCanvas(wt, el);
+  });
+}
+
+function deleteEl(el) {
+  if (DC.sel === el) deselect();
+  el.remove();
+  updateLayers();
+  saveHist();
+  if (!$("#canvas").querySelector("[data-dc]")) {
+    const hint = $("#canvasHint");
+    if (hint) hint.classList.remove("hidden");
+  }
+  toast("Deleted", "info");
+}
+
+function dupEl(el) {
+  const c = el.cloneNode(true);
+  c.setAttribute("data-dc", gid());
+  c.classList.remove("dc-sel", "dc-dragging");
+  c.querySelectorAll("[data-dc]").forEach((ch) =>
+    ch.setAttribute("data-dc", gid()),
+  );
+  el.parentNode.insertBefore(c, el.nextSibling);
+  bindElement(c);
+  c.querySelectorAll("[data-dc]").forEach(bindElement);
+  updateLayers();
+  saveHist();
+  selectEl(c);
+  toast("Duplicated", "success");
+}
+
+function moveEl(el, dir) {
+  const p = el.parentNode;
+  if (dir === "up" && el.previousElementSibling)
+    p.insertBefore(el, el.previousElementSibling);
+  else if (dir === "down" && el.nextElementSibling)
+    p.insertBefore(el.nextElementSibling, el);
+  updateLayers();
+  saveHist();
+  posElActions(el);
+}
+
+/* ==========================================
    SMOOTH VIEWPORT SWITCH
    ========================================== */
 
