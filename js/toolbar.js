@@ -3,6 +3,15 @@
  */
 
 function initToolbar() {
+  // Undo / Redo
+  $("#btnUndo").addEventListener("click", undo);
+  $("#btnRedo").addEventListener("click", redo);
+
+  // Tools
+  $$("[data-tool]").forEach((btn) => {
+    btn.addEventListener("click", () => setTool(btn.dataset.tool));
+  });
+
   // Top zoom controls — now with smooth animation
   $("#btnZoomIn").addEventListener("click", () =>
     animateZoomTo(DC.zoom + 0.15, 250),
@@ -100,6 +109,37 @@ function initToolbar() {
       switchViewport(t.dataset.vp);
     }),
   );
+
+  // Element actions
+  $("#eaDel").addEventListener("click", () => {
+    if (DC.sel) deleteEl(DC.sel);
+  });
+  $("#eaDup").addEventListener("click", () => {
+    if (DC.sel) dupEl(DC.sel);
+  });
+  $("#eaUp").addEventListener("click", () => {
+    if (DC.sel) moveEl(DC.sel, "up");
+  });
+  $("#eaDown").addEventListener("click", () => {
+    if (DC.sel) moveEl(DC.sel, "down");
+  });
+
+  // Modals
+  $("#btnPreview").addEventListener("click", openPreview);
+  $("#closePreview").addEventListener("click", () =>
+    $("#previewModal").classList.add("hidden"),
+  );
+  $("#btnExport").addEventListener("click", openExport);
+  $("#closeExport").addEventListener("click", () =>
+    $("#exportModal").classList.add("hidden"),
+  );
+  $("#btnSave").addEventListener("click", saveProject);
+
+  $$(".modal-overlay").forEach((o) => {
+    o.addEventListener("click", (e) => {
+      if (e.target === o) o.classList.add("hidden");
+    });
+  });
 }
 
 // Compatibility — old applyZoom calls
