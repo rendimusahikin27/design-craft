@@ -1,3 +1,53 @@
+/**
+ * CANVAS — Figma-like infinite canvas with pan, zoom & internal drag-move
+ */
+
+const CONTAINERS = [
+  "div",
+  "section",
+  "article",
+  "aside",
+  "header",
+  "footer",
+  "nav",
+  "main",
+  "form",
+  "fieldset",
+  "figure",
+  "details",
+  "ul",
+  "ol",
+  "dl",
+];
+const EDITABLE_TAGS = [
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "p",
+  "span",
+  "a",
+  "strong",
+  "em",
+  "label",
+  "button",
+  "small",
+  "code",
+  "blockquote",
+  "summary",
+  "figcaption",
+  "output",
+  "mark",
+  "abbr",
+  "td",
+  "th",
+  "li",
+  "dt",
+  "dd",
+];
+
 /* ==========================================
    PAN & ZOOM
    ========================================== */
@@ -843,4 +893,22 @@ function animateCenterCanvas(duration) {
   const targetPanY = Math.max(40, (r.height - ch * DC.zoom) / 2);
 
   animatePan(DC.panX, targetPanX, DC.panY, targetPanY, duration || 400);
+}
+
+/* ==========================================
+   RESPONSIVE BEHAVIOR HANDLER
+   ========================================== */
+
+function handleResponsiveChanges(vp) {
+  const canvas = $("#canvas");
+
+  // Close all mobile menus when switching away from mobile
+  canvas.querySelectorAll(".rc-nav-mobile-menu").forEach((menu) => {
+    menu.classList.remove("open");
+  });
+
+  // Reset toggle buttons state
+  canvas.querySelectorAll(".rc-nav-toggle").forEach((btn) => {
+    btn.innerHTML = '<i class="fas fa-bars"></i>';
+  });
 }
