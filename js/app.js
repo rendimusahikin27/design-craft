@@ -9,5 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initCanvasInteraction(); // Figma-like pan & zoom
   initToolbar();
   initPanels();
+  initDragDrop();
   initKeyboard();
 });
