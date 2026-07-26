@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DesignCraft — UI/UX Design Tool</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/toolbar.css" />
+  </head>
+  <body>
+    <!-- TOP TOOLBAR -->
+    <header class="top-toolbar" id="topToolbar">
+      <div class="toolbar-left">
+        <div class="logo">
+          <i class="fas fa-pen-ruler"></i><span>DesignCraft</span>
+        </div>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" id="btnUndo" title="Undo (Ctrl+Z)">
+          <i class="fas fa-undo"></i>
+        </button>
+        <button class="tb-btn" id="btnRedo" title="Redo (Ctrl+Y)">
+          <i class="fas fa-redo"></i>
+        </button>
+        <div class="tb-sep"></div>
+        <!-- Tools -->
+        <div class="tool-group">
+          <button
+            class="tb-btn active"
+            id="btnToolSelect"
+            data-tool="select"
+            title="Select (V)"
+          >
+            <i class="fas fa-mouse-pointer"></i>
+          </button>
+          <button
+            class="tb-btn"
+            id="btnToolHand"
+            data-tool="hand"
+            title="Hand Tool (H / Space)"
+          >
+            <i class="fas fa-hand-paper"></i>
+          </button>
+        </div>
+      </div>
+      <div class="tb-sep"></div>
+      <div class="toolbar-center">
+        <div class="vp-tabs">
+          <button class="vp-tab" data-vp="desktop">
+            <i class="fas fa-desktop"></i><span>Desktop</span>
+          </button>
+          <button class="vp-tab active" data-vp="tablet">
+            <i class="fas fa-tablet-alt"></i><span>Tablet</span>
+          </button>
+          <button class="vp-tab" data-vp="mobile">
+            <i class="fas fa-mobile-alt"></i><span>Mobile</span>
+          </button>
+        </div>
+      </div>
+      <div class="toolbar-right">
+        <button class="tb-btn" id="btnToggleLeft" title="Widgets Panel">
+          <i class="fas fa-th-large"></i>
+        </button>
+        <button class="tb-btn" id="btnToggleRight" title="Properties Panel">
+          <i class="fas fa-sliders-h"></i>
+        </button>
+        <div class="tb-sep"></div>
+        <!-- Zoom Control -->
+        <div class="zoom-ctrl">
+          <button
+            class="tb-btn zoom-btn"
+            id="btnZoomOut"
+            title="Zoom Out (Ctrl+-)"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button
+            class="zoom-val-btn"
+            id="btnZoomVal"
+            title="Double-click to fit, Click to reset"
+          >
+            <span id="zoomValue">100%</span>
+          </button>
+          <button
+            class="tb-btn zoom-btn"
+            id="btnZoomIn"
+            title="Zoom In (Ctrl++)"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+          <button
+            class="tb-btn zoom-btn"
+            id="btnZoomFit"
+            title="Fit to Screen (Ctrl+0)"
+          >
+            <i class="fas fa-expand"></i>
+          </button>
+        </div>
+        <div class="tb-sep"></div>
+        <button class="tb-btn" id="btnPreview">
+          <i class="fas fa-eye"></i><span>Preview</span>
+        </button>
+        <button class="tb-btn" id="btnExport">
+          <i class="fas fa-code"></i><span>Export</span>
+        </button>
+        <button class="tb-btn primary" id="btnSave">
+          <i class="fas fa-save"></i><span>Save</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- INFINITE CANVAS AREA -->
+    <main class="canvas-area" id="canvasArea">
+      <!-- Pan/Zoom info overlay -->
+      <div class="canvas-info" id="canvasInfo">
+        <span class="canvasCoords">0, 0</span>
+      </div>
+
+      <!-- The infinite workspace -->
+      <div class="canvas-world" id="canvasWorld">
+        <!-- The actual design frame -->
+        <div class="canvas-frame" id="canvasFrame">
+          <div class="frame-label" id="frameLabel">Desktop — 1200 x 700</div>
+          <div
+            class="canvas"
+            id="canvas"
+            data-vp="desktop
+          "
+          >
+            <div class="canvas-hint" id="canvasHint">
+              <div class="hint-icon">
+                <i class="fas fa-plus-circle"></i>
+                <p>Drag & Drop widgets here</p>
+                <span>or double-click a widget from the panel</span>
+                <div class="hint-shortcuts">
+                  <kbd>Ctrl</kbd>+<kbd>Scroll</kbd> Zoom &nbsp;
+                  <kbd>Space</kbd>+<kbd>Drag</kbd> Pan &nbsp;
+                  <kbd>Middle Click</kbd> Pan
+                </div>
+              </div>
+            </div>
+
+            <!-- Zoom slider (bottom-right) -->
+            <div class="canvas-zoom-bar" id="canvasZoomBar">
+              <button class="czb-btn" id="czZoomOut">
+                <i class="fas fa-minus"></i>
+              </button>
+              <input
+                type="range"
+                id="czSlide"
+                min="10"
+                max="300"
+                value="100"
+                step="1"
+              />
+              <button class="czb-btn" id="czZoomIn">
+                <i class="fas fa-plus"></i>
+                <span class="czb-val" id="czVal">100%</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="js/state.js"></script>
+    <script src="js/utils.js"></script>
+  </body>
+</html>
