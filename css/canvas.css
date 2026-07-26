@@ -1,0 +1,426 @@
+/* ============================================
+   CANVAS — Figma-like infinite canvas
+   ============================================ */
+
+.canvas-area {
+  position: absolute;
+  top: var(--tb-h);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: var(--bg-canvas);
+  cursor: default;
+  user-select: none;
+  --grid-color: rgba(255, 255, 255, 0.03);
+  --grid-size: 20px;
+}
+
+.canvas-area.hand-active {
+  cursor: grab !important;
+}
+.canvas-area.hand-active.panning {
+  cursor: grabbing !important;
+}
+.canvas-area.hand-active * {
+  cursor: inherit !important;
+}
+
+.canvas-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+}
+
+.canvas-frame {
+  position: absolute;
+}
+
+.frame-label {
+  position: absolute;
+  top: -32px;
+  left: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.3px;
+}
+
+/* The actual design canvas */
+.canvas {
+  background: #ffffff;
+  min-height: 700px;
+  position: relative;
+  border-radius: 4px;
+  overflow: visible;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 8px 40px rgba(0, 0, 0, 0.25),
+    0 0 120px rgba(124, 108, 240, 0.02);
+  /* No transition by default (for zoom smoothness) */
+  transition: none;
+}
+
+/* Smooth viewport transition — toggled temporarily via JS */
+.canvas.vp-animating {
+  transition:
+    width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.5s ease;
+}
+
+.canvas[data-vp="desktop"] {
+  width: 1200px;
+}
+.canvas[data-vp="tablet"] {
+  width: 768px;
+}
+.canvas[data-vp="mobile"] {
+  width: 375px;
+}
+
+/* Frame label smooth */
+.frame-label {
+  position: absolute;
+  top: -32px;
+  left: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.3px;
+  transition: opacity 0.3s ease;
+}
+
+.frame-label.fading {
+  opacity: 0;
+}
+
+/* Drop hint */
+.canvas-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+  color: #bbb;
+  text-align: center;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.hint-icon {
+  font-size: 56px;
+  color: #ddd;
+  opacity: 0.4;
+}
+.canvas-hint p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #999;
+}
+.canvas-hint > span {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.hint-shortcuts {
+  margin-top: 16px;
+  font-size: 11px;
+  color: #ccc;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hint-shortcuts kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: var(--font);
+  color: #666;
+  line-height: 1.4;
+}
+
+/* ===== Element States ===== */
+.canvas [data-dc] {
+  position: relative;
+  cursor: pointer;
+  min-height: 6px;
+  outline: 1px dashed transparent;
+  transition:
+    outline 0.1s,
+    opacity 0.2s;
+}
+
+.canvas [data-dc]:hover {
+  outline: 1px dashed rgba(124, 108, 240, 0.35);
+}
+
+.canvas [data-dc].dc-sel {
+  outline: 2px solid var(--accent) !important;
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.canvas [data-dc].dc-sel::after {
+  content: attr(data-dc-tag);
+  position: absolute;
+  top: -24px;
+  left: -2px;
+  background: var(--accent);
+  color: white;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 4px 4px 4px 0;
+  font-family: var(--font);
+  z-index: 10;
+  white-space: nowrap;
+  line-height: 16px;
+  pointer-events: none;
+}
+
+/* Drop active for external widget drops */
+.canvas .drop-active {
+  background-color: rgba(124, 108, 240, 0.04) !important;
+  outline: 2px dashed var(--accent) !important;
+}
+
+/* ===== INTERNAL DRAG STATES ===== */
+
+/* Element being dragged */
+.canvas [data-dc].dc-dragging {
+  opacity: 0.3 !important;
+  outline: 2px dashed rgba(124, 108, 240, 0.3) !important;
+  box-shadow: none !important;
+  pointer-events: none;
+}
+
+.canvas [data-dc].dc-dragging::after {
+  display: none;
+}
+
+/* Drag ghost that follows cursor */
+#canvasDragGhost {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0.85;
+  border-radius: 6px;
+  box-shadow:
+    0 8px 30px rgba(124, 108, 240, 0.25),
+    0 0 0 2px var(--accent);
+  transform: rotate(1deg) scale(0.95);
+  transition: none;
+  max-width: 400px;
+  max-height: 300px;
+  overflow: hidden;
+  background: white;
+}
+
+#canvasDragGhost.active {
+  display: block;
+}
+
+#canvasDragGhost:not(.active) {
+  display: none;
+}
+
+/* ===== DROP INDICATOR LINE ===== */
+.drop-indicator {
+  position: absolute;
+  z-index: 9999;
+  pointer-events: none;
+  transition:
+    top 0.08s ease,
+    left 0.08s ease,
+    width 0.08s ease,
+    height 0.08s ease;
+}
+
+/* Horizontal line (before/after) */
+.drop-indicator.drop-h {
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  box-shadow:
+    0 0 8px var(--accent-glow),
+    0 0 2px var(--accent);
+}
+
+.drop-indicator.drop-h::before,
+.drop-indicator.drop-h::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.drop-indicator.drop-h::before {
+  left: -4px;
+}
+.drop-indicator.drop-h::after {
+  right: -4px;
+}
+
+/* Container highlight (inside) */
+.drop-indicator.drop-inside {
+  border: 2px dashed var(--accent);
+  background: rgba(124, 108, 240, 0.04);
+  border-radius: 6px;
+}
+
+.drop-indicator.drop-inside::after {
+  content: "Drop inside";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  font-family: var(--font);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 3px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* ===== CANVAS INFO & ZOOM BAR ===== */
+.canvas-info {
+  position: absolute;
+  bottom: 52px;
+  left: 12px;
+  font-size: 10px;
+  color: var(--text-3);
+  z-index: 10;
+  pointer-events: none;
+  font-family: "Courier New", monospace;
+  opacity: 0.6;
+}
+
+.canvas-zoom-bar {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 4px 8px;
+  z-index: 10;
+  box-shadow: var(--shadow-md);
+}
+
+.czb-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  padding: 4px 6px;
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  font-size: 11px;
+  transition: var(--ease);
+}
+
+.czb-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-1);
+}
+
+.canvas-zoom-bar input[type="range"] {
+  width: 100px;
+  height: 4px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.czb-val {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+  min-width: 38px;
+  text-align: center;
+}
+
+/* ===== ELEMENT ACTIONS ===== */
+.el-actions {
+  position: fixed;
+  display: flex;
+  gap: 3px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 3px;
+  box-shadow: var(--shadow-md);
+  z-index: 160;
+  pointer-events: auto;
+}
+
+.el-actions.hidden {
+  display: none;
+}
+
+.ea-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  padding: 5px 7px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-size: 11px;
+  transition: var(--ease);
+}
+
+.ea-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-1);
+}
+.ea-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--danger);
+}
+
+/* ===== DOT GRID ===== */
+.canvas-area::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 1px
+  );
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: var(--grid-ox, 0px) var(--grid-oy, 0px);
+  transition: none;
+}
+
+@media (max-width: 600px) {
+  .canvas-area {
+    padding: 20px;
+  }
+}
