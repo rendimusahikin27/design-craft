@@ -14,9 +14,14 @@
     />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/toolbar.css" />
-    <link rel="stylesheet" href="css/panel.css" />
+    <link rel="stylesheet" href="css/panels.css" />
     <link rel="stylesheet" href="css/canvas.css" />
     <link rel="stylesheet" href="css/widgets.css" />
+    <link rel="stylesheet" href="css/properties.css" />
+    <link rel="stylesheet" href="css/layers.css" />
+    <!-- <link rel="stylesheet" href="css/modals.css" /> -->
+    <!-- <link rel="stylesheet" href="css/toast.css" /> -->
+    <link rel="stylesheet" href="css/responsive-canvas.css" />
   </head>
   <body>
     <!-- TOP TOOLBAR -->
@@ -53,7 +58,6 @@
           </button>
         </div>
       </div>
-      <div class="tb-sep"></div>
       <div class="toolbar-center">
         <div class="vp-tabs">
           <button class="vp-tab active" data-vp="desktop">
@@ -247,13 +251,75 @@
       <div class="fp-resize fp-resize-l" id="resizeRight"></div>
     </aside>
 
+    <!-- ELEMENT ACTIONS -->
+    <div class="el-actions hidden" id="elActions">
+      <button class="ea-btn" id="eaDup" title="Duplicate">
+        <i class="fas fa-copy"></i>
+      </button>
+      <button class="ea-btn" id="eaUp" title="Move Up">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="ea-btn" id="eaDown" title="Move Down">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+      <button class="ea-btn danger" id="eaDel" title="Delete">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+
+    <!-- PREVIEW MODAL -->
+    <div class="modal-overlay hidden" id="previewModal">
+      <div class="modal modal-preview">
+        <div class="modal-bar">
+          <h3><i class="fas fa-eye"></i> Preview</h3>
+          <button class="modal-x" id="closePreview">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <iframe id="previewFrame" class="preview-frame"></iframe>
+      </div>
+    </div>
+
+    <!-- EXPORT MODAL -->
+    <div class="modal-overlay hidden" id="exportModal">
+      <div class="modal modal-export">
+        <div class="modal-bar">
+          <h3><i class="fas fa-code"></i> Export Code</h3>
+          <button class="modal-x" id="closeExport">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="exp-tabs">
+          <button class="exp-tab active" data-exp="html">HTML</button>
+          <button class="exp-tab" data-exp="css">CSS</button>
+          <button class="exp-tab" data-exp="full">Full Page</button>
+        </div>
+        <div class="exp-code">
+          <button class="btn-copy" id="btnCopy">
+            <i class="fas fa-copy"></i> Copy
+          </button>
+          <pre><code id="expCode"></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast-box" id="toastBox"></div>
+
+    <!-- MODULES -->
     <script src="js/state.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/widgets.js"></script>
     <script src="js/canvas.js"></script>
     <script src="js/selection.js"></script>
+    <script src="js/properties.js"></script>
+    <script src="js/attributes.js"></script>
+    <script src="js/layers.js"></script>
+    <script src="js/history.js"></script>
     <script src="js/toolbar.js"></script>
-    <script src="js/panel.js"></script>
+    <script src="js/panels.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/storage.js"></script>
     <script src="js/keyboard.js"></script>
     <script src="js/dragdrop.js"></script>
     <script src="js/app.js"></script>
