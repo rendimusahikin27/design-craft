@@ -527,3 +527,53 @@ function performDrop() {
     if (hint) hint.classList.add("hidden");
   }
 }
+
+/**
+ * Animated zoom to level (smooth)
+ */
+function animateZoomTo(targetZoom, duration) {
+  const area = $("#canvasArea");
+  const r = area.getBoundingClientRect();
+  const cx = r.width / 2;
+  const cy = r.height / 2;
+
+  const startZoom = DC.zoom;
+  const startPanX = DC.panX;
+  const startPanY = DC.panY;
+
+  // Calculate target pan
+  const tz = clampZoom(targetZoom);
+  const scale = tz / startZoom;
+  const targetPanX = cx - scale * (cx - startPanX);
+  const targetPanY = cy - scale * (cy - startPanY);
+
+  const start = performance.now();
+  duration = duration || 300;
+
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeOutCubic(progress);
+
+    DC.zoom = startZoom + (tz - startZoom) * eased;
+    DC.panX = startPanX + (targetPanX - startPanX) * eased;
+    DC.panY = startPanY + (targetPanY - startPanY) * eased;
+
+    applyTransform();
+
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      DC.zoom = tz;
+      DC.panX = targetPanX;
+      DC.panY = targetPanY;
+      applyTransform();
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
