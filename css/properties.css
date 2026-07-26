@@ -1,0 +1,355 @@
+/* ============================================
+   PROPERTIES — Style editor in right panel
+   ============================================ */
+
+.prop-empty {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--text-3);
+}
+
+.prop-empty i {
+  font-size: 28px;
+  margin-bottom: 10px;
+  opacity: 0.3;
+  display: block;
+}
+
+.prop-empty p {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.prop-editor.hidden {
+  display: none;
+}
+
+/* Selected info */
+.sel-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--accent-sub);
+  border-radius: var(--r-sm);
+  margin-bottom: 8px;
+}
+
+.sel-tag {
+  background: var(--accent);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sel-id {
+  color: var(--text-3);
+  font-size: 10px;
+}
+
+/* Sections */
+.ps {
+  margin-bottom: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+
+.ps-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-2);
+  background: rgba(255, 255, 255, 0.02);
+  transition: var(--ease);
+}
+
+.ps-head:hover {
+  background: var(--bg-hover);
+}
+.ps-head > i {
+  font-size: 7px;
+  transition: transform 0.2s;
+  width: 10px;
+}
+.ps-head.collapsed > i {
+  transform: rotate(-90deg);
+}
+
+.ps-body {
+  padding: 8px 10px;
+}
+.ps-body.collapsed {
+  display: none;
+}
+
+/* Property rows */
+.pr {
+  margin-bottom: 8px;
+}
+.pr:last-child {
+  margin-bottom: 0;
+}
+
+.pr > label,
+.sub-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-3);
+  margin-bottom: 3px;
+}
+
+.sub-label {
+  font-weight: 600;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 6px 0 4px;
+}
+
+.pr input[type="text"],
+.pr input[type="number"],
+.pr textarea,
+.pr select {
+  width: 100%;
+  padding: 5px 8px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text-1);
+  font-size: 11px;
+  outline: none;
+  transition: var(--ease);
+}
+
+.pr input:focus,
+.pr textarea:focus,
+.pr select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.pr textarea {
+  resize: vertical;
+  min-height: 30px;
+}
+.pr select {
+  cursor: pointer;
+}
+
+.pr-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.pr-2 .pr {
+  margin-bottom: 0;
+}
+
+/* Checkbox */
+.pr-chk {
+  margin-bottom: 6px;
+}
+.pr-chk label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--text-2);
+}
+.pr-chk input[type="checkbox"] {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Color */
+.color-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.color-row input[type="color"] {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  padding: 2px;
+  background: var(--bg-input);
+  flex-shrink: 0;
+}
+
+.color-row input[type="text"] {
+  flex: 1;
+}
+
+/* Range */
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.range-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.range-row span {
+  font-size: 10px;
+  color: var(--text-3);
+  min-width: 28px;
+  text-align: right;
+}
+
+/* Button group */
+.btn-grp {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-input);
+  border-radius: var(--r-sm);
+  padding: 2px;
+}
+
+.bg-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-3);
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 11px;
+  transition: var(--ease);
+}
+
+.bg-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-1);
+}
+.bg-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+/* Apply button */
+.btn-apply {
+  width: 100%;
+  padding: 6px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  transition: var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.btn-apply:hover {
+  background: var(--accent-h);
+}
+
+/* Spacing visual */
+.sp-vis {
+  background: rgba(124, 108, 240, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 4px;
+}
+
+.sp-vis.pad-vis {
+  background: rgba(34, 197, 94, 0.05);
+  border-color: rgba(34, 197, 94, 0.15);
+}
+
+.sv-top,
+.sv-bot {
+  display: flex;
+  justify-content: center;
+  padding: 2px;
+}
+.sv-mid {
+  display: flex;
+  align-items: center;
+}
+.sv-l,
+.sv-r {
+  width: 40px;
+  padding: 2px;
+  flex-shrink: 0;
+}
+.sv-c {
+  flex: 1;
+  text-align: center;
+  padding: 4px;
+}
+.sv-inner {
+  height: 20px;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+}
+
+.sp-vis input {
+  width: 40px;
+  padding: 2px 3px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-1);
+  font-family: var(--font);
+  font-size: 9px;
+  text-align: center;
+  outline: none;
+}
+
+.sp-vis input:focus {
+  border-color: var(--accent);
+}
+
+/* Custom attr */
+.cattr-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.cattr-row input {
+  flex: 1;
+  padding: 4px 6px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-1);
+  font-size: 10px;
+  outline: none;
+}
+
+.cattr-row button {
+  background: transparent;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  padding: 3px 5px;
+  font-size: 10px;
+}
