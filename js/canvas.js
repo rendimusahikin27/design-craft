@@ -529,6 +529,58 @@ function performDrop() {
 }
 
 /**
+ * Smooth pan animation using easing
+ */
+function animatePan(fromX, toX, fromY, toY, duration, onComplete) {
+  const start = performance.now();
+
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeOutCubic(progress);
+
+    DC.panX = fromX + (toX - fromX) * eased;
+    DC.panY = fromY + (toY - fromY) * eased;
+
+    // Apply transform but DON'T call full applyTransform
+    // to avoid grid jitter — just move the world
+    const world = $("#canvasWorld");
+    world.style.transform = `translate(${DC.panX}px, ${DC.panY}px) scale(${DC.zoom})`;
+
+    // Update grid position
+    const area = $("#canvasArea");
+    const gs = 20 * DC.zoom;
+    area.style.setProperty("--grid-ox", (DC.panX % gs) + "px");
+    area.style.setProperty("--grid-oy", (DC.panY % gs) + "px");
+
+    // Update coordinates display
+    const pct = Math.round(DC.zoom * 100);
+    const coords = $("#canvasCoords");
+    if (coords)
+      coords.textContent = `${Math.round(DC.panX)}, ${Math.round(DC.panY)} · ${pct}%`;
+
+    // Reposition element actions
+    if (DC.sel) posElActions(DC.sel);
+
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      // Final exact position
+      DC.panX = toX;
+      DC.panY = toY;
+      applyTransform();
+      if (onComplete) onComplete();
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
+/**
  * Animated zoom to level (smooth)
  */
 function animateZoomTo(targetZoom, duration) {
@@ -576,4 +628,23 @@ function animateZoomTo(targetZoom, duration) {
   }
 
   requestAnimationFrame(tick);
+}
+
+/**
+ * Animated center canvas (smooth)
+ */
+function animateCenterCanvas(duration) {
+  const area = $("#canvasArea");
+  const canvas = $("#canvas");
+  const r = area.getBoundingClientRect();
+
+  // Target: zoom stays, just re-center pan
+  const vpWidths = { desktop: 1200, tablet: 768, mobile: 375 };
+  const cw = vpWidths[DC.viewport] || canvas.offsetWidth;
+  const ch = canvas.offsetHeight;
+
+  const targetPanX = (r.width - cw * DC.zoom) / 2;
+  const targetPanY = Math.max(40, (r.height - ch * DC.zoom) / 2);
+
+  animatePan(DC.panX, targetPanX, DC.panY, targetPanY, duration || 400);
 }
