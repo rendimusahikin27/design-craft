@@ -528,6 +528,73 @@ function performDrop() {
   }
 }
 
+/* ==========================================
+   SMOOTH VIEWPORT SWITCH
+   ========================================== */
+
+function switchViewport(newVP) {
+  const canvas = $("#canvas");
+  const label = $("#frameLabel");
+  const area = $("#canvasArea");
+  const oldVP = DC.viewport;
+
+  if (newVP === oldVP) return;
+
+  // Get old width before change
+  const oldWidth = canvas.offsetWidth;
+  const oldHeight = canvas.offsetHeight;
+
+  // Fade label out
+  if (label) label.classList.add("fading");
+
+  // Enable CSS transition on canvas
+  canvas.classList.add("vp-animating");
+
+  // Change viewport
+  DC.viewport = newVP;
+  canvas.setAttribute("data-vp", newVP);
+
+  // Calculate new width (read from CSS)
+  const vpWidths = { desktop: 1200, tablet: 768, mobile: 375 };
+  const newWidth = vpWidths[newVP] || 1200;
+
+  // Smoothly adjust pan so canvas stays visually centered
+  // during the width transition — without changing zoom
+  const areaRect = area.getBoundingClientRect();
+  const areaCenterX = areaRect.width / 2;
+
+  // Current visual center of canvas
+  const oldCenterX = DC.panX + (oldWidth * DC.zoom) / 2;
+
+  // Where new center should be
+  const newCenterX = areaCenterX;
+
+  // Animate pan
+  const targetPanX = newCenterX - (newWidth * DC.zoom) / 2;
+
+  // Use requestAnimationFrame for smooth pan interpolation
+  animatePan(DC.panX, targetPanX, DC.panY, DC.panY, 400, () => {
+    // After animation complete
+    canvas.classList.remove("vp-animating");
+
+    // Update label
+    if (label) {
+      label.classList.remove("fading");
+      updateFrameLabel();
+    }
+  });
+
+  // Update tabs
+  $$(".vp-tab").forEach((t) =>
+    t.classList.toggle("active", t.dataset.vp === newVP),
+  );
+
+  // Trigger responsive behaviors after transition
+  setTimeout(() => {
+    handleResponsiveChanges(newVP);
+  }, 100);
+}
+
 /**
  * Smooth pan animation using easing
  */
