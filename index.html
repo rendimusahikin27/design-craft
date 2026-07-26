@@ -14,6 +14,7 @@
     />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/toolbar.css" />
+    <link rel="stylesheet" href="css/canvas.css" />
   </head>
   <body>
     <!-- TOP TOOLBAR -->
@@ -120,53 +121,46 @@
     <main class="canvas-area" id="canvasArea">
       <!-- Pan/Zoom info overlay -->
       <div class="canvas-info" id="canvasInfo">
-        <span class="canvasCoords">0, 0</span>
+        <span id="canvasCoords">0, 0</span>
       </div>
 
       <!-- The infinite workspace -->
       <div class="canvas-world" id="canvasWorld">
         <!-- The actual design frame -->
         <div class="canvas-frame" id="canvasFrame">
-          <div class="frame-label" id="frameLabel">Desktop — 1200 x 700</div>
-          <div
-            class="canvas"
-            id="canvas"
-            data-vp="desktop
-          "
-          >
+          <div class="frame-label" id="frameLabel">Desktop — 1200 × 700</div>
+          <div class="canvas" id="canvas" data-vp="desktop">
             <div class="canvas-hint" id="canvasHint">
-              <div class="hint-icon">
-                <i class="fas fa-plus-circle"></i>
-                <p>Drag & Drop widgets here</p>
-                <span>or double-click a widget from the panel</span>
-                <div class="hint-shortcuts">
-                  <kbd>Ctrl</kbd>+<kbd>Scroll</kbd> Zoom &nbsp;
-                  <kbd>Space</kbd>+<kbd>Drag</kbd> Pan &nbsp;
-                  <kbd>Middle Click</kbd> Pan
-                </div>
+              <div class="hint-icon"><i class="fas fa-plus-circle"></i></div>
+              <p>Drag & Drop widgets here</p>
+              <span>or double-click a widget from the panel</span>
+              <div class="hint-shortcuts">
+                <kbd>Ctrl</kbd>+<kbd>Scroll</kbd> Zoom &nbsp;
+                <kbd>Space</kbd>+<kbd>Drag</kbd> Pan &nbsp;
+                <kbd>Middle Click</kbd> Pan
               </div>
-            </div>
-
-            <!-- Zoom slider (bottom-right) -->
-            <div class="canvas-zoom-bar" id="canvasZoomBar">
-              <button class="czb-btn" id="czZoomOut">
-                <i class="fas fa-minus"></i>
-              </button>
-              <input
-                type="range"
-                id="czSlide"
-                min="10"
-                max="300"
-                value="100"
-                step="1"
-              />
-              <button class="czb-btn" id="czZoomIn">
-                <i class="fas fa-plus"></i>
-                <span class="czb-val" id="czVal">100%</span>
-              </button>
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Zoom slider (bottom-right) -->
+      <div class="canvas-zoom-bar" id="canvasZoomBar">
+        <button class="czb-btn" id="czZoomOut">
+          <i class="fas fa-minus"></i>
+        </button>
+        <input
+          type="range"
+          id="czSlider"
+          min="10"
+          max="300"
+          value="100"
+          step="1"
+        />
+        <button class="czb-btn" id="czZoomIn">
+          <i class="fas fa-plus"></i>
+        </button>
+        <span class="czb-val" id="czVal">100%</span>
       </div>
     </main>
 
