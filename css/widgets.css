@@ -1,0 +1,168 @@
+/* ============================================
+   WIDGETS — Widget items in left panel
+   ============================================ */
+
+.search-box {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.search-box i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-3);
+  font-size: 11px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 8px 10px 8px 30px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--text-1);
+  font-size: 11px;
+  outline: none;
+  transition: var(--ease);
+}
+
+.search-box input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+/* Groups */
+.wg-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.widget-group {
+  /* separator handled differently in normal vs mini */
+}
+
+.wg-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: var(--ease);
+  user-select: none;
+}
+
+.wg-head:hover {
+  background: var(--bg-hover);
+}
+
+.wg-arrow {
+  font-size: 8px;
+  transition: transform 0.2s;
+  width: 10px;
+  text-align: center;
+}
+
+.wg-head.collapsed .wg-arrow {
+  transform: rotate(-90deg);
+}
+
+.wg-icon {
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.wg-count {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text-3);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+/* Widget grid */
+.wg-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px 2px;
+}
+
+.wg-body.collapsed {
+  display: none;
+}
+
+/* Widget item */
+.widget-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  cursor: grab;
+  transition: var(--ease);
+  user-select: none;
+}
+
+.widget-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-s);
+  transform: translateY(-1px);
+}
+
+.widget-item:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.wi-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-sm);
+  background: var(--accent-sub);
+  color: var(--accent);
+  font-size: 12px;
+  transition: var(--ease);
+}
+
+.wi-icon b {
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.widget-item > span {
+  font-size: 9px;
+  color: var(--text-3);
+  text-align: center;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+/* Dragging state */
+.widget-item.dragging {
+  opacity: 0.4;
+  transform: scale(0.95);
+  border-color: var(--accent);
+  background: var(--accent-sub);
+}
+
+#dragGhost {
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
+}
