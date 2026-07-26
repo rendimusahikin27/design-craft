@@ -1,6 +1,7 @@
-/*  ================================================ 
-    MAIN — Variables, Reset, Base
-    ================================================*/
+/* ============================================
+   MAIN — Variables, Reset, Base
+   ============================================ */
+
 :root {
   --bg-app: #101014;
   --bg-canvas: #1a1a20;
@@ -8,7 +9,7 @@
   --bg-panel-solid: #16161e;
   --bg-input: #1e1e28;
   --bg-hover: #2a2a38;
-  --bg-active: #3334a;
+  --bg-active: #33334a;
   --surface: #252532;
   --border: rgba(255, 255, 255, 0.06);
   --border-s: rgba(255, 255, 255, 0.1);
@@ -18,7 +19,7 @@
   --accent: #7c6cf0;
   --accent-h: #8d7ff5;
   --accent-glow: rgba(124, 108, 240, 0.2);
-  --accent-sub: rgba(124, 107, 240, 0.08);
+  --accent-sub: rgba(124, 108, 240, 0.08);
   --danger: #ef4444;
   --success: #22c55e;
   --info: #3b82f6;
@@ -49,6 +50,21 @@ body {
   font-size: 12px;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
 input,
 textarea,
 select,
@@ -58,23 +74,4 @@ button {
 
 .hidden {
   display: none !important;
-}
-
-/* Scroll */
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.14);
 }
