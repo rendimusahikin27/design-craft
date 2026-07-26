@@ -1,0 +1,183 @@
+/*  ============================================
+    TOOLBAR — Top Navigation Bar
+    ============================================*/
+.top-toolbar {
+  height: var(--tb-h);
+  background-color: var(--bg-panel-solid);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  z-index: 200;
+  position: relative;
+  backdrop-filter: blur(20px);
+}
+
+.toolbar-left,
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toolbar-center {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--accent);
+  padding: 0 8px;
+}
+
+.logo i {
+  font-size: 18px;
+}
+
+.tb-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border-s);
+  margin: 0 6px;
+}
+
+.tb-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  padding: 7px 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  transition: var(--ease);
+  white-space: nowrap;
+}
+
+.tb-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-1);
+}
+
+.tb-btn.active {
+  background: var(--accent-sub);
+  color: var(--accent);
+}
+
+.tb-btn.primary {
+  background: var(--accent);
+  color: white;
+}
+
+.tb-btn.primary:hover {
+  background: var(--accent-h);
+}
+
+.tb-btn span {
+  font-weight: 500;
+}
+
+/* Tool Group */
+.tool-group {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-input);
+  border-radius: var(--r-sm);
+  padding: 2px;
+}
+
+.tool-group .tb-btn {
+  padding: 5px 8px;
+}
+
+/* Zoom */
+.zoom-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--bg-input);
+  border-radius: var(--r-sm);
+  padding: 2px;
+}
+
+.zoom-btn {
+  padding: 5px 6px !important;
+  font-size: 10px !important;
+}
+
+.zoom-val-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 48px;
+  text-align: center;
+  cursor: pointer;
+  padding: 4px 4px;
+  border-radius: 4px;
+  transition: var(--ease);
+}
+
+.zoom-val-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-1);
+}
+
+/* Viewport */
+.vp-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-input);
+  border-radius: var(--r-sm);
+  padding: 1px;
+}
+
+.vp-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-3);
+  padding: 5px 14px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  transition: var(--ease);
+}
+
+.vp-tab:hover {
+  color: var(--text-2);
+}
+
+.vp-tab.active {
+  background: var(--accent);
+  color: white;
+}
+
+.vp-tab span {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .vp-tab span {
+    display: inline;
+  }
+}
+
+@media (max-width: 900px) {
+  .tb-btn span {
+    display: none;
+  }
+}
