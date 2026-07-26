@@ -14,6 +14,7 @@
     />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/toolbar.css" />
+    <link rel="stylesheet" href="css/panel.css" />
     <link rel="stylesheet" href="css/canvas.css" />
   </head>
   <body>
@@ -164,10 +165,93 @@
       </div>
     </main>
 
+    <!-- LEFT PANEL -->
+    <aside class="fp fp-left open" id="panelLeft">
+      <div class="fp-head" id="fpHeadLeft">
+        <div class="fp-tabs">
+          <button class="fp-tab active" data-lp="widgets">
+            <i class="fas fa-th-large"></i>
+            <span class="fp-tab-label">Widgets</span>
+          </button>
+          <button class="fp-tab" data-lp="layers">
+            <i class="fas fa-layer-group"></i>
+            <span class="fp-tab-label">Layers</span>
+          </button>
+        </div>
+        <div class="fp-head-actions">
+          <button
+            class="fp-mini-toggle"
+            id="btnMiniToggle"
+            title="Toggle Mini Sidebar"
+          >
+            <i class="fas fa-compress-alt" id="miniToggleIcon"></i>
+          </button>
+          <button class="fp-x" id="closeLeft">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="fp-body" id="panelWidgets">
+        <!-- Search (hidden in mini mode via CSS) -->
+        <div class="search-box mini-hide">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            id="widgetSearch"
+            placeholder="Search widgets..."
+          />
+        </div>
+        <div class="wg-container" id="wgContainer"></div>
+      </div>
+      <div class="fp-body hidden" id="panelLayers">
+        <div class="layers-list" id="layersList">
+          <div class="layers-empty">
+            <i class="fas fa-layer-group"></i>
+            <p>No elements yet</p>
+          </div>
+        </div>
+      </div>
+      <div class="fp-resize fp-resize-r" id="resizeLeft"></div>
+    </aside>
+
+    <!-- RIGHT PANEL -->
+    <aside class="fp fp-right open" id="panelRight">
+      <div class="fp-head" id="fpHeadRight">
+        <div class="fp-tabs">
+          <button class="fp-tab active" data-rp="style">
+            <i class="fas fa-paint-brush"></i> Style
+          </button>
+          <button class="fp-tab" data-rp="attrs">
+            <i class="fas fa-cog"></i> Attrs
+          </button>
+        </div>
+        <button class="fp-x" id="closeRight">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="fp-body" id="panelStyle">
+        <div class="prop-empty" id="propsEmpty">
+          <i class="fas fa-mouse-pointer"></i>
+          <p>Select an element<br />to edit properties</p>
+        </div>
+        <div class="prop-editor hidden" id="propsEditor"></div>
+      </div>
+      <div class="fp-body hidden" id="panelAttrs">
+        <div class="prop-empty" id="attrsEmpty">
+          <i class="fas fa-cog"></i>
+          <p>Select an element<br />to edit attributes</p>
+        </div>
+        <div class="prop-editor hidden" id="attrsEditor"></div>
+      </div>
+      <div class="fp-resize fp-resize-l" id="resizeRight"></div>
+    </aside>
+
     <script src="js/state.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/widgets.js"></script>
     <script src="js/canvas.js"></script>
     <script src="js/toolbar.js"></script>
+    <script src="js/panel.js"></script>
     <script src="js/keyboard.js"></script>
     <script src="js/app.js"></script>
   </body>
