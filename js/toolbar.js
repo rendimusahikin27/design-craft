@@ -93,6 +93,13 @@ function initToolbar() {
   $("#czSlider").addEventListener("input", function () {
     zoomTo(parseInt(this.value) / 100);
   });
+
+  // ===== VIEWPORT TABS — smooth switch =====
+  $$(".vp-tab").forEach((t) =>
+    t.addEventListener("click", () => {
+      switchViewport(t.dataset.vp);
+    }),
+  );
 }
 
 // Compatibility — old applyZoom calls
