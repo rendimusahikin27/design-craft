@@ -1,0 +1,148 @@
+/* ============================================
+   MODALS — Preview & Export
+   ============================================ */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+}
+
+.modal {
+  background: var(--bg-panel-solid);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-panel);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-preview {
+  width: 90vw;
+  height: 85vh;
+}
+
+.modal-export {
+  width: 680px;
+  max-width: 90vw;
+  max-height: 80vh;
+}
+
+.modal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-bar h3 {
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-x {
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  transition: var(--ease);
+}
+
+.modal-x:hover {
+  background: var(--bg-hover);
+  color: var(--text-1);
+}
+
+.preview-frame {
+  flex: 1;
+  border: none;
+  background: white;
+}
+
+/* Export tabs */
+.exp-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 10px 20px 0;
+}
+
+.exp-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-3);
+  padding: 7px 14px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  transition: var(--ease);
+}
+
+.exp-tab:hover {
+  color: var(--text-2);
+}
+.exp-tab.active {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-1);
+}
+
+/* Code area */
+.exp-code {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+  margin: 0 20px 20px;
+  border-radius: var(--r-sm);
+  background: var(--bg-app);
+  border: 1px solid var(--border);
+}
+
+.exp-code pre {
+  padding: 16px;
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: var(--text-1);
+  font-family: "Courier New", monospace;
+  max-height: 48vh;
+  overflow: auto;
+}
+
+.btn-copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 2;
+  transition: var(--ease);
+}
+
+.btn-copy:hover {
+  background: var(--accent-h);
+}
