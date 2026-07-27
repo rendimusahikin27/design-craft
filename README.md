@@ -17,14 +17,14 @@ Think Figma meets a website builder — but you own everything and it runs on an
 
 ## Quick Start
 
-**Option A — Just open it**
+### Option A — Just open it
 
 ```bash
 git clone https://github.com/rendimusahikin27/design-craft.git
 # open index.html in your browser
 ```
 
-**Option B — With PHP (enables save/load)**
+### Option B — With PHP (enables save/load)
 
 ```bash
 cd /your/webserver/htdocs
@@ -33,17 +33,17 @@ mkdir -p design-craft/projects && chmod 777 design-craft/projects
 # visit http://localhost/design-craft
 ```
 
-**Option C — PHP built-in server**
+### Option C — PHP built-in server
 
 ```bash
 cd design-craft && php -S localhost:8000
 ```
 
-That's it. No npm install. No node_modules. No config files.
+**That's it. No npm install. No node_modules. No config files.**
 
 ## How to Use
 
-**The Canvas**
+### The Canvas
 
 ```text
 Action              How
@@ -54,7 +54,7 @@ Reset               Ctrl + 1 or click zoom percentage
 Switch Viewport     Click Desltop / Tablet / Mobile
 ```
 
-**Building**
+### Building
 
 ```text
 Action              How
@@ -67,7 +67,7 @@ Edit Style          Select element → right panel → Style tab
 Edit attributes     Select element → right panel → Attrs tab
 ```
 
-**Managing**
+### Managing
 
 ```text
 Action              How
@@ -79,8 +79,8 @@ Preview             Preview button → opens in iframe
 Export              Export button → HTML / CSS / Fullpage + Copy
 ```
 
-**What You Can Drop**
-70+ widgets covering every common HTML element:
+### What You Can Drop
+**70+ widgets covering every common HTML element:**
 
 ```text
 Category            Includes
@@ -92,9 +92,9 @@ Lists & Table       ul, ol, dl, table
 Components          Navbar · Hero · Features · Card · CTA · Testimonials · Footer · 2/3-col grids
 ```
 
-All components are responsive — switch to mobile viewport and the navbar gets a working hamburger menu, grids stack, buttons reflow, fonts scale down.
+**All components are responsive — switch to mobile viewport and the navbar gets a working hamburger menu, grids stack, buttons reflow, fonts scale down.**
 
-**Keyboard Cheatsheet**
+### Keyboard Cheatsheet
 
 ```text
 Ctrl + Scroll     Zoom to cursor       V          Select tool
@@ -105,8 +105,8 @@ Ctrl + S          Save                 Escape     Deselect / close
 Ctrl + D          Duplicate            Dbl-click  Edit text inline
 ```
 
-**The Panels**
-Left Panel — Widgets & Layers
+### The Panels
+**Left Panel — Widgets & Layers**
 
 ```text
 Mode            Description
@@ -115,9 +115,9 @@ Mini            Icon-only strip (56px) — hover for tooltips
 Layers          Tree view of all elements, click to select + scroll into view
 ```
 
-Toggle mini mode with the ⇄ button. Layers tab always shows full.
+**Toggle mini mode with the ⇄ button. Layers tab always shows full.**
 
-Right Panel — Style & Attributes
+**Right Panel — Style & Attributes**
 
 ```text
 Tab             What you can edit
@@ -125,9 +125,9 @@ Style           Display, Flex, Size, Margin/Padding (visual box), Font, Color, B
 Attrs           id, class, title, href, src, alt, name, placeholder, value, required, disabled, custom attributes
 ```
 
-Both panels float over the canvas, have glassmorphism styling, and are resizable by dragging the edge.
+**Both panels float over the canvas, have glassmorphism styling, and are resizable by dragging the edge.**
 
-**Export**
+### Export
 
 ```text
 Format          You get
@@ -136,9 +136,9 @@ CSS             Inline styles extracted as class-based rules
 Full Page       Complete document with fonts, icons, responsive media queries, and mobile nav script
 ```
 
-All design artifacts (data-dc, selection classes, indicators) are stripped. The exported code is ready to ship.
+**All design artifacts (data-dc, selection classes, indicators) are stripped. The exported code is ready to ship.**
 
-**Project Structure**
+### Project Structure
 
 ```text
 designcraft/
@@ -175,8 +175,9 @@ designcraft/
 └── projects/               ← auto-created, stores saves
 ```
 
-Every file stays under ~200 lines. Fix one thing → edit one file.
-**Requirements**
+**Every file stays under ~200 lines. Fix one thing → edit one file.**
+
+### Requirements
 
 ```text
 Minimum: Any modern browser (Chrome 80+, Firefox 75+, Safari 13+, Edge 80+)
@@ -184,7 +185,7 @@ For save/load: PHP 7.4+ with write access to projects/ directory
 Without PHP: Everything works — saves go to localStorage instead.
 ```
 
-**Troubleshooting**
+### Troubleshooting
 
 ```text
 Issue	                            Fix
@@ -195,23 +196,23 @@ Mini mode causes horizontal scroll	Use latest css/panels.css with overflow fix
 Elements unresponsive after undo	restoreHist() must call bindElement() on restored elements
 ```
 
-Favicon fix — add this one line to <head>:
+### Favicon fix — add this one line to <head>:
 
 ```HTML
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237c6cf0'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>D</text></svg>">
 ```
 
-**What's Next**
-v1.1 — Multi-page support · Component library · Image upload · Google Fonts browser · Right-click context menu · Rulers & snap-to-grid
+### What's Next
+**v1.1 — Multi-page support · Component library · Image upload · Google Fonts browser · Right-click context menu · Rulers & snap-to-grid**
 
-v2.0 — CSS animation builder · Real-time collaboration · Version history · Plugin system · WordPress export · Tailwind mode · Accessibility checker
+**v2.0 — CSS animation builder · Real-time collaboration · Version history · Plugin system · WordPress export · Tailwind mode · Accessibility checker**
 
-**Tech**
-v1.1 — Multi-page support · Component library · Image upload · Google Fonts browser · Right-click context menu · Rulers & snap-to-grid
+### Tech
+**v1.1 — Multi-page support · Component library · Image upload · Google Fonts browser · Right-click context menu · Rulers & snap-to-grid**
 
-v2.0 — CSS animation builder · Real-time collaboration · Version history · Plugin system · WordPress export · Tailwind mode · Accessibility checker
+**v2.0 — CSS animation builder · Real-time collaboration · Version history · Plugin system · WordPress export · Tailwind mode · Accessibility checker**
 
-**License**
-MIT — do whatever you want with it.
+### License
+**MIT — do whatever you want with it.**
 
-Built for designers who want to own their tools.
+**Built for designers who want to own their tools.**
