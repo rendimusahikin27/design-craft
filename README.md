@@ -5,6 +5,9 @@
 A Figma-inspired UI/UX design tool running entirely on HTML, CSS, JavaScript & PHP.
 Zero frameworks. Zero build steps. Just open and design.
 
+<img width="1025" height="653" alt="gambar" src="https://github.com/user-attachments/assets/29b7160c-5b72-45d8-8a21-008c1dc5a27b" />
+
+
 ---
 
 ## What is this?
