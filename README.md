@@ -205,17 +205,25 @@ Elements unresponsive after undo	restoreHist() must call bindElement() on restor
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237c6cf0'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>D</text></svg>">
 ```
 
+---
+
 ### What's Next
 **v1.1 — Multi-page support · Component library · Image upload · Google Fonts browser · Right-click context menu · Rulers & snap-to-grid**
 
 **v2.0 — CSS animation builder · Real-time collaboration · Version history · Plugin system · WordPress export · Tailwind mode · Accessibility checker**
+
+---
 
 ### Tech
 **v1.1 — Multi-page support · Component library · Image upload · Google Fonts browser · Right-click context menu · Rulers & snap-to-grid**
 
 **v2.0 — CSS animation builder · Real-time collaboration · Version history · Plugin system · WordPress export · Tailwind mode · Accessibility checker**
 
+---
+
 ### License
 **MIT — do whatever you want with it.**
+
+---
 
 **Built for designers who want to own their tools.**
